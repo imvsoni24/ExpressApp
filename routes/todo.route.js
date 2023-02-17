@@ -2,6 +2,7 @@ const express = require("express")
 
 const todoRouter = express.Router()
 const {TodoModel} = require("../models/todo.model");
+const {auth} = require("../middlewares/auth.middleware")
 
 todoRouter.get("/",async(req,res)=>{
      try{
@@ -13,7 +14,7 @@ todoRouter.get("/",async(req,res)=>{
      }
 })
 
-todoRouter.post("/create", async(req, res) => {
+todoRouter.post("/create",auth, async(req, res) => {
     try {
         let todo = new TodoModel(req.body);
         await todo.save();
@@ -24,7 +25,7 @@ todoRouter.post("/create", async(req, res) => {
 
 });
 
-todoRouter.patch("/update/:id", async(req, res) => {
+todoRouter.patch("/update/:id",auth, async(req, res) => {
     let payload = req.body;
     let id = req.params.id;
     const todo = await TodoModel.findOne({"_id":id})
@@ -41,7 +42,7 @@ todoRouter.patch("/update/:id", async(req, res) => {
 
 });
 
-todoRouter.delete("/delete/:id", async(req, res) => {
+todoRouter.delete("/delete/:id",auth, async(req, res) => {
     let id = req.params.id;
     const todo = await TodoModel.findOne({"_id":id})
     if(req.body.userId!==todo.userId){

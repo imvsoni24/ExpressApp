@@ -2,7 +2,7 @@ const express = require("express");
 const { connection } = require("./configs/db");
 const {userRouter} = require("./routes/user.route")
 const {todoRouter} = require("./routes/todo.route")
-const { auth } = require("./middlewares/auth.middleware");
+
 const cors = require("cors");
 
 
@@ -14,7 +14,7 @@ app.get("/",(req,res)=>{
     res.send("Welcome to my Todo app")
 })
 app.use("/user",userRouter)
-app.use(auth)
+
 app.use("/todo",todoRouter)
 
 app.listen(process.env.port,async()=>{
