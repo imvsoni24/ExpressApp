@@ -4,7 +4,7 @@ const todoRouter = express.Router()
 const {TodoModel} = require("../models/todo.model");
 const {auth} = require("../middlewares/auth.middleware")
 
-todoRouter.get("/",auth,async(req,res)=>{
+todoRouter.get("/",async(req,res)=>{
      try{
         let todo = await TodoModel.find()
         res.send(todo)
