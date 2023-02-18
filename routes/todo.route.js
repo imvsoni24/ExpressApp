@@ -4,7 +4,7 @@ const todoRouter = express.Router()
 const {TodoModel} = require("../models/todo.model");
 const {auth} = require("../middlewares/auth.middleware")
 
-todoRouter.get("/",async(req,res)=>{
+todoRouter.get("/",auth,async(req,res)=>{
      try{
         let todo = await TodoModel.find()
         res.send(todo)
@@ -36,7 +36,7 @@ todoRouter.patch("/update/:id",auth, async(req, res) => {
         await TodoModel.findByIdAndUpdate({_id:id},payload)
         res.json({msg:"Todo has been updated"})
     } catch (err) {
-      res.json({msg:err});
+      res.json({ msg: "You can not update someone's post" });
     }
   }
 
